@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Animated, StyleSheet } from 'react-native'
-import { Appbar, Button, useTheme } from 'react-native-paper'
+import { Appbar, Button } from 'react-native-paper'
 
-import { useHeaderTextColor } from '../utils'
+// import { useHeaderTextColor } from '../utils'
 import { getTranslation } from '../translations/utils'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -19,10 +19,10 @@ export interface DatePickerModalHeaderProps {
 export default function DatePickerModalHeader(
   props: DatePickerModalHeaderProps
 ) {
-  const theme = useTheme()
-  const { locale, closeIcon = 'close' } = props
+  // const theme = useTheme()
+  const { locale } = props
   const saveLabel = props.saveLabel || getTranslation(locale, 'save')
-  const color = useHeaderTextColor()
+  // const color = useHeaderTextColor()
   const insets = useSafeAreaInsets()
 
   return (
@@ -37,20 +37,23 @@ export default function DatePickerModalHeader(
         ]}
       >
         <Appbar style={styles.appbarHeader}>
-          <Appbar.Action
-            icon={closeIcon}
-            accessibilityLabel={getTranslation(locale, 'close')}
+           <Button
+            textColor={'#6C00D9'}
             onPress={props.onDismiss}
-            color={color}
-            testID="react-native-paper-dates-close"
-          />
-          <Appbar.Content title={''} />
+            disabled={props.saveLabelDisabled ?? false}
+            uppercase={props.uppercase ?? true}
+            testID="react-native-paper-dates-save"
+            style={{ marginRight: 16 }}
+          >
+            Cancel
+          </Button>
           <Button
-            textColor={theme.isV3 ? theme.colors.primary : color}
+            textColor={'#FFFFFF'}
             onPress={props.onSave}
             disabled={props.saveLabelDisabled ?? false}
             uppercase={props.uppercase ?? true}
             testID="react-native-paper-dates-save"
+            style={{ backgroundColor: '#6C00D9', marginRight: 16 }}
           >
             {saveLabel}
           </Button>
@@ -86,5 +89,7 @@ const styles = StyleSheet.create({
   appbarHeader: {
     elevation: 0,
     backgroundColor: 'transparent',
+    bottom: 30,
+    alignSelf: 'flex-end'
   },
 })
