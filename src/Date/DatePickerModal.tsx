@@ -3,7 +3,6 @@ import {
   Modal,
   StyleSheet,
   TouchableWithoutFeedback,
-  useWindowDimensions,
   View,
   Platform,
 } from 'react-native'
@@ -25,15 +24,15 @@ interface DatePickerModalProps {
 
 export interface DatePickerModalSingleProps
   extends DatePickerModalContentSingleProps,
-    DatePickerModalProps {}
+  DatePickerModalProps { }
 
 export interface DatePickerModalMultiProps
   extends DatePickerModalContentMultiProps,
-    DatePickerModalProps {}
+  DatePickerModalProps { }
 
 export interface DatePickerModalRangeProps
   extends DatePickerModalContentRangeProps,
-    DatePickerModalProps {}
+  DatePickerModalProps { }
 
 export function DatePickerModal(
   props:
@@ -42,7 +41,6 @@ export function DatePickerModal(
     | DatePickerModalMultiProps
 ) {
   const theme = useTheme()
-  const dimensions = useWindowDimensions()
   const {
     visible,
     animationType,
@@ -50,7 +48,6 @@ export function DatePickerModal(
     disableStatusBarPadding,
     inputEnabled,
     presentationStyle,
-    statusBarOnTopOfBackdrop,
     ...rest
   } = props
   const animationTypeCalculated =
@@ -60,25 +57,26 @@ export function DatePickerModal(
       default: 'slide',
     })
 
-  const isPageSheet = presentationStyle === 'pageSheet' && Platform.OS === 'ios'
 
   return (
     <View style={[StyleSheet.absoluteFill]} pointerEvents="box-none">
       <Modal
         animationType={animationTypeCalculated}
-        transparent={!isPageSheet}
+        transparent={true}
         visible={visible}
         onRequestClose={rest.onDismiss}
-        presentationStyle={isPageSheet ? 'pageSheet' : 'overFullScreen'}
-        supportedOrientations={supportedOrientations}
+        // presentationStyle={isPageSheet ? 'pageSheet' : 'overFullScreen'}
+        // supportedOrientations={supportedOrientations}
         statusBarTranslucent={true}
+      // style={{margin: 0,   justifyContent: 'center',
+      // alignItems: 'center',}}
       >
         <TouchableWithoutFeedback onPress={rest.onDismiss}>
           <View
             style={[
               StyleSheet.absoluteFill,
               styles.modalBackground,
-              { backgroundColor: theme.colors.backdrop },
+              { backgroundColor: theme.colors.backdrop, borderRadius: 28 },
             ]}
           />
         </TouchableWithoutFeedback>
@@ -90,15 +88,12 @@ export function DatePickerModal(
             style={[
               styles.modalContent,
               { backgroundColor: theme.colors.surface },
-              dimensions.width > 650 ? styles.modalContentBig : null,
+              // dimensions.width > 650 ? styles.modalContentBig : null,
             ]}
           >
             <DatePickerModalContent
               {...rest}
-              inputEnabled={inputEnabled}
-              disableSafeTop={disableStatusBarPadding}
-              disableStatusBar={disableStatusBar}
-              statusBarOnTopOfBackdrop={isPageSheet || statusBarOnTopOfBackdrop}
+              inputEnabled={inputEnabled} 
             />
           </View>
         </View>
@@ -107,26 +102,24 @@ export function DatePickerModal(
   )
 }
 
-const supportedOrientations: any = [
-  'portrait',
-  'portrait-upside-down',
-  'landscape',
-  'landscape-left',
-  'landscape-right',
-]
-
 const styles = StyleSheet.create({
   modalRoot: {
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    height: 560,
+    marginTop: '50%',
+    marginLeft: 20,
+    marginRight: 20,
+    borderRadius: 28,
   },
   modalBackground: {
-    flex: 1,
+    // flex: 1,
+
   },
   modalContent: {
     flex: 1,
     width: '100%',
+    borderRadius: 28
   },
   modalContentBig: {
     maxWidth: 600,
