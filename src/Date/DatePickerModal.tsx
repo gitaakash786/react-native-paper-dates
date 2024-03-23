@@ -106,8 +106,6 @@ const styles = StyleSheet.create({
   modalRoot: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 560,
-    marginTop: '50%',
     marginLeft: 20,
     marginRight: 20,
     borderRadius: 28,
