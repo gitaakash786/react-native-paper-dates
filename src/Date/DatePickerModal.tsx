@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   View,
   Platform,
+  Dimensions
 } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import DatePickerModalContent, {
@@ -106,6 +107,8 @@ const styles = StyleSheet.create({
   modalRoot: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: 560,
+    marginTop: Dimensions.get('window').height /6,
     marginLeft: 20,
     marginRight: 20,
     borderRadius: 28,
